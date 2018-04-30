@@ -1,15 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// user schema
 
-/*
-var reviewerSchema = Schema({
-    ReviewerName: {type:String,required: true},
-    smallQuote: {type: String, required: true},
-    rating:Number
-});
-*/
 var reviewSchema = Schema({
     MovieTitle:{type: String, required: true},
     ReviewerName: {type:String,required: true},

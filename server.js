@@ -36,7 +36,7 @@ router.route('/postjwt')
 
 router.route('/movie/:title')
     .get(authJwtController.isAuthenticated, function (req, res) {
-        Movie.findOne({Title: req.params.title}).exec(function(err, movie1) {
+        Movie.findOne({title: req.params.title}).exec(function(err, movie1) {
             if (err) res.send(err);
 
             //var userJson = JSON.stringify(movie);
@@ -57,9 +57,9 @@ router.route('/movie/:title')
         }
         else
         {
-            Movie.findOne({Title: req.params.title}).exec(function(err, result){ //Make sure movie exists before deleting
+            Movie.findOne({title: req.params.title}).exec(function(err, result){ //Make sure movie exists before deleting
                 if (result !== null) {
-                    Movie.remove({Title: req.params.title}).exec(function (err) {
+                    Movie.remove({title: req.params.title}).exec(function (err) {
                         if (err)  res.json({ success: false, message: "Could not find movie with title '" + req.body.Title + "'"});
                         else res.json({ success: true, message: "Movie deleted."});
                     })
@@ -68,9 +68,9 @@ router.route('/movie/:title')
         }
     })
     .put(authJwtController.isAuthenticated, function (req, res) {
-        Movie.findOne({Title: req.params.title}).exec(function(err, movie) {
+        Movie.findOne({title: req.params.title}).exec(function(err, movie) {
             if (movie !== null) {
-                movie.Title = req.body.Title;
+                movie.title = req.body.Title;
                 movie.releaseYear = req.body.releaseYear;
                 movie.Genre = req.body.Genre;
                 movie.Actors = req.body.Actors;
@@ -103,7 +103,7 @@ router.route('/movies')
 
     .post(authJwtController.isAuthenticated, function (req, res) {
         var newMovie = new Movie();
-        newMovie.Title = req.body.Title;
+        newMovie.title = req.body.title;
         newMovie.releaseYear = req.body.releaseYear;
         newMovie.Genre = req.body.Genre;
         newMovie.Actors = req.body.Actors;
@@ -130,14 +130,14 @@ router.route('/reviews/:title')
             Movie.aggregate([
                 {
                     $match: {
-                        Title: title
+                        title: title
                     }
                 },
                 {
                     $lookup:
                         {
                             from: 'reviews',
-                            localField: 'Title',
+                            localField: 'title',
                             foreignField: 'MovieTitle',
                             as: 'Reviews'
                         }
@@ -153,7 +153,7 @@ router.route('/reviews/:title')
             res.json({message: 'Please send a response with the query parameter true'});
         }
 
-        Movie.findOne({Title: req.params.title}).exec(function(err, movie) {
+        Movie.findOne({title: req.params.title}).exec(function(err, movie) {
             if (err) res.send(err);
 
             //var userJson = JSON.stringify(movie);
@@ -169,7 +169,7 @@ router.route('/reviews/:title')
     });
 
 router.route('/reviews/:title').post(authJwtController.isAuthenticated, function (req, res) {
-    Movie.findOne({Title: req.params.title}).exec(function (err, movie) {
+    Movie.findOne({title: req.params.title}).exec(function (err, movie) {
         if (err) res.send(err);
         // if the movie with reviews already exists, then just add new Reviews
         if (movie !== null) {
@@ -201,7 +201,7 @@ router.route('/reviews')
                     $lookup:
                         {
                             from: 'reviews',
-                            localField: 'Title',
+                            localField: 'title',
                             foreignField: 'MovieTitle',
                             as: 'Reviews'
                         }

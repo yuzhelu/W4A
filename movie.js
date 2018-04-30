@@ -9,7 +9,7 @@ var actorSchema = Schema({
 });
 
 var movieSchema = Schema({
-    Title:{type: String, required: true, index: { unique: true }},
+    title:{type: String, required: true, index: { unique: true }},
     releaseYear: {type: Number, required: true},
     imageURL: String,
     avgRating: Number,
