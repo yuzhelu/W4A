@@ -7,11 +7,11 @@ var Movie = require('./movie');
 var Review = require('./review');
 var jwt = require('jsonwebtoken');
 var cors = require('cors');
-var dotenv = require('dotenv').config();
+var dotenv = require('dotenv');
 var mongoose = require('mongoose');
 
 
-mongoose.connect(process.env.mongoDB)
+mongoose.connect(process.env.mongoDB);
 
 var app = express();
 app.use(bodyParser.json());
